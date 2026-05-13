@@ -31,7 +31,7 @@ public class FuncionarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Funcionario> funcionarioPorId(@PathVariable Long id) {
+    public ResponseEntity<Funcionario> funcionariosPorId(@PathVariable Long id) {
         Funcionario funcionario = funcionarioRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Não encontramos usuário com esse identificador"));
 

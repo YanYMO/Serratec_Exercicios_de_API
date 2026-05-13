@@ -2,13 +2,13 @@ package org.serratec.aula04.controller;
 
 import jakarta.validation.Valid;
 import org.serratec.aula04.domain.Cliente;
+import org.serratec.aula04.exception.RecursoNaoEncontradoException;
 import org.serratec.aula04.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,13 +25,16 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> clientesPorId(@PathVariable Long id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Não encontramos usuário com esse identificador"));
 
-        if (!cliente.isPresent()) {
+        return ResponseEntity.ok(cliente);
+
+        /*if (!cliente.isPresent()) {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok(cliente.get());
-        }
+        }*/
     }
 
     @GetMapping("/buscar")
