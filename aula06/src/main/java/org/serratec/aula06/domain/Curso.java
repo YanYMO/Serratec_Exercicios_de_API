@@ -32,7 +32,7 @@ public class Curso {
     @Column(name = "preco", nullable = false)
     private BigDecimal preco;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany()
     @JsonIgnoreProperties("cursos")
     @JoinTable(name = "curso_aluno",
             joinColumns = @JoinColumn(name = "id_curso"),

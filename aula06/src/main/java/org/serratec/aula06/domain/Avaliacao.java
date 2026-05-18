@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
 
 import java.time.LocalDate;
 
@@ -24,20 +25,20 @@ public class Avaliacao {
     @Column(name = "nota", nullable = false)
     private Integer nota;
 
-    @CreationTimestamp
-    @Column(name = "data_avaliacao", updatable = false)
-    private LocalDate dataAvaliacao;
+    @NotBlank(message = "O campo precisa ser preenchido.")
+    @Column(name = "data_avaliacao", nullable = false, updatable = false)
+    private String data;
 
     @ManyToOne
     @JoinColumn(name = "id_livro")
     @JsonBackReference
     private Livro livro;
 
-    public Avaliacao(Long id, String comentario, Integer nota, LocalDate data, Livro livro) {
+    public Avaliacao(Long id, String comentario, Integer nota, String data, Livro livro) {
         this.id = id;
         this.comentario = comentario;
         this.nota = nota;
-        this.dataAvaliacao = data;
+        this.data = data;
         this.livro = livro;
     }
 
@@ -68,12 +69,12 @@ public class Avaliacao {
         this.nota = nota;
     }
 
-    public LocalDate getData() {
-        return dataAvaliacao;
+    public String getData() {
+        return data;
     }
 
-    public void setData(LocalDate data) {
-        this.dataAvaliacao = data;
+    public void setData(String data) {
+        this.data = data;
     }
 
     public Livro getLivro() {
